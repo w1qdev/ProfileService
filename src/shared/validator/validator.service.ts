@@ -38,12 +38,6 @@ export class ValidatorService {
       return parsedUser;
     }
 
-    console.log(
-      userData.email,
-      userData.password,
-      !this.validateUserPassword(userData.password),
-    );
-
     if (!this.validateUserPassword(userData.password)) {
       return {
         success: false,

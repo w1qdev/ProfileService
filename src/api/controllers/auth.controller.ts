@@ -33,9 +33,7 @@ export class AuthController {
       const userData = req.body;
 
       const user = await this.authService.authenticate(userData);
-      
-      console.log(user)
-      
+
       const response = {
         status: "ok",
         data: user,
