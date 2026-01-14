@@ -1,0 +1,11 @@
+export type UserRegistrationData = {
+  fullName: string;
+  email: string;
+  password: string;
+  birthDate: string;
+};
+
+export type UserAuthenticationData = {
+  email: string;
+  password: string;
+};
