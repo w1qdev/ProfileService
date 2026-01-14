@@ -54,6 +54,8 @@ export class AuthService {
       return { message: "Invalid password" };
     }
 
-    return user;
+    const { password: userPassword, ...result } = user;
+
+    return result;
   }
 }
