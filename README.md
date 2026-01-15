@@ -113,17 +113,6 @@ npm run prisma:generate
 npm run dev
 ```
 
-Сервер запустится на `http://localhost:3000`
-
-Терминал 2 - Frontend:
-
-```bash
-cd client
-npm run dev
-```
-
-Клиент запустится на `http://localhost:5173`
-
 **Вариант 2: Production сборка**
 
 Backend:
@@ -131,14 +120,6 @@ Backend:
 ```bash
 npm run build
 npm start
-```
-
-Frontend:
-
-```bash
-cd client
-npm run build
-npm run preview
 ```
 
 ## 📚 API Endpoints
