@@ -1,9 +1,12 @@
 import { prisma } from "../../database/prisma";
-import { UserStatus, userDefaultSelect } from "./user.constants";
+import { UserStatus, userDefaultSelect, UserRoles } from "./user.constants";
 import { UserRegistrationData } from "../auth/auth.types";
 import { CustomSelect, UserUpdate } from "./user.types";
+import { JwtService } from "../../shared/jwt/jwt.service";
 
 export class UserService {
+  private readonly jwtService: JwtService = new JwtService();
+
   async getUserById(userId: string, customSelect?: CustomSelect) {
     const user = await prisma.user.findUnique({
       where: {
@@ -82,5 +85,24 @@ export class UserService {
     });
 
     return updatedUser;
+  }
+
+  async grantAdminRole(userId: string, customSelect?: CustomSelect) {
+    const user = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        role: UserRoles.ADMIN,
+      },
+      select: { ...userDefaultSelect, ...customSelect },
+    });
+
+    const { accessToken, refreshToken } = this.jwtService.generateTokens(
+      user.id,
+      UserRoles.ADMIN,
+    );
+
+    return { ...user, accessToken, refreshToken };
   }
 }

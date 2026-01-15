@@ -67,4 +67,21 @@ export class UserController {
       return res.status(200).json({ message: "Internal server error" });
     }
   }
+
+  async grantAdminRole(req: Request, res: Response) {
+    try {
+      const userId = req.params.id as string;
+      const user = await this.userService.grantAdminRole(userId);
+
+      const response = {
+        status: "ok",
+        data: user,
+      };
+
+      return res.status(200).json(response);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }

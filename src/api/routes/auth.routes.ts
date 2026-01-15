@@ -22,4 +22,9 @@ router.post("/login", authenticationMiddleware, (req: Request, res: Response) =>
   authController.login(req, res),
 );
 
+// POST api/auth/refresh-token
+router.post("/refresh-token", (req: Request, res: Response) =>
+  authController.refreshToken(req, res),
+);
+
 export default router;

@@ -63,6 +63,7 @@ export class AuthService {
 
     const { refreshToken, accessToken } = this.jwtService.generateTokens(
       user.id,
+      user.role,
     );
 
     await this.userService.updateUser(user.id, {
@@ -72,6 +73,33 @@ export class AuthService {
     const response = {
       ...user,
       refreshToken,
+      accessToken,
+    };
+
+    const { password: userPassword, ...result } = response;
+
+    return result;
+  }
+
+  async refreshToken(refreshToken: string) {
+    const verifyToken = this.jwtService.verifyRefreshToken(refreshToken);
+
+    const user = await this.userService.getUserById(verifyToken.userId);
+
+    if (!user) {
+      return { message: "User not found" };
+    }
+
+    const { refreshToken: newRefreshToken, accessToken } =
+      this.jwtService.generateTokens(user.id, user.role);
+
+    const updatedUser = await this.userService.updateUser(user.id, {
+      refreshToken: newRefreshToken,
+    });
+
+    const response = {
+      ...updatedUser,
+      refreshToken: newRefreshToken,
       accessToken,
     };
 

@@ -10,9 +10,9 @@ export class JwtService {
   private readonly jwtRefreshTokenExpirationTime =
     process.env.JWT_REFRESH_EXPIRES_IN;
 
-  generateTokens(userId: string) {
+  generateTokens(userId: string, role?: UserRoles) {
     const accessToken = this.jwt.sign(
-      { userId, role: UserRoles.USER },
+      { userId, role: role || UserRoles.USER },
       this.jwtAccessSecretToken,
       { expiresIn: this.jwtAccessTokenExpirationTime },
     );

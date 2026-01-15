@@ -18,8 +18,8 @@ export const jwtMiddleware = async (
     if (!verifyResult) {
       return res.status(401).json({ message: "Invalid token" });
     }
-
     req.user = verifyResult;
+
     next();
   } catch (error) {
     next(error);

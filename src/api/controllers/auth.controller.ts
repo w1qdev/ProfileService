@@ -25,7 +25,7 @@ export class AuthController {
       return res.status(200).json(response);
     } catch (error) {
       console.log(error);
-      return res.status(400).json({ error: "Some internal error" });
+      return res.status(500).json({ error: "Some internal error" });
     }
   }
 
@@ -43,7 +43,29 @@ export class AuthController {
       return res.status(200).json(response);
     } catch (error) {
       console.log(error);
-      return res.status(400).json({ error: "Some internal error" });
+      return res.status(500).json({ error: "Some internal error" });
+    }
+  }
+
+  async refreshToken(req: Request, res: Response) {
+    try {
+      const refreshToken = req.headers.authorization?.split(" ")[1];
+
+      if (!refreshToken) {
+        return res.status(401).json({ message: "No token provided" });
+      }
+
+      const user = await this.authService.refreshToken(refreshToken);
+
+      const response = {
+        status: "ok",
+        data: user,
+      };
+
+      return res.status(200).json(response);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Some internal error" });
     }
   }
 }

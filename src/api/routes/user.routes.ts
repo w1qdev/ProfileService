@@ -20,6 +20,15 @@ router.get(
   (req: Request, res: Response) => userController.getUser(req, res),
 );
 
+// POST api/users/:id/grant-admin
+router.post(
+  "/:id/grant-admin",
+  jwtMiddleware,
+  (req: Request, res: Response, next: NextFunction) =>
+    roleMiddleware(req, res, next, UserRoles.ADMIN),
+  (req: Request, res: Response) => userController.grantAdminRole(req, res),
+);
+
 // GET api/users
 router.get(
   "/",
