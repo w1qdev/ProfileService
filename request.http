@@ -1,0 +1,100 @@
+### ProfileService API Testing
+### Base URL: http://localhost:3000/api
+
+### ============================================
+### AUTHENTICATION ENDPOINTS
+### ============================================
+
+### 1. Register a new user
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "John Doe",
+  "email": "john@example.com",
+  "password": "SecurePassword123!",
+  "birthDate": "1990-01-15"
+}
+
+### 2. Register another user for testing
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Jane Smith",
+  "email": "jane@example.com",
+  "password": "SecurePassword456!",
+  "birthDate": "1992-05-20"
+}
+
+### 3. Register admin user
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Admin User",
+  "email": "admin@example.com",
+  "password": "AdminPassword123!",
+  "birthDate": "1985-03-10"
+}
+
+### 4. Login user (get tokens)
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "SecurePassword123!"
+}
+
+### 5. Login another user
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "jane@example.com",
+  "password": "SecurePassword456!"
+}
+
+### 6. Login admin user
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "AdminPassword123!"
+}
+
+### 7. Refresh access token
+### Note: Replace the token with actual refresh token from login response
+POST http://localhost:3000/api/auth/refresh-token
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNDc5OWE3YS0wNjRmLTQwNzEtYWZiMi04NGNlYzY3ZDU3ZDAiLCJpYXQiOjE3Njg0ODAwMjUsImV4cCI6MTc3NjI1NjAyNX0.JNQXg2Ns3q5rxtpbWBzRmZn3Uh8eRyqAb1azsK8t0GE
+### ============================================
+### USER ENDPOINTS
+### ============================================
+
+### 8. Get user by ID (requires authentication)
+### Note: Replace the ID and token with actual values
+GET http://localhost:3000/api/users/a4799a7a-064f-4071-afb2-84cec67d57d0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNDc5OWE3YS0wNjRmLTQwNzEtYWZiMi04NGNlYzY3ZDU3ZDAiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2ODQ4MDA0OSwiZXhwIjoxNzY4NDgwOTQ5fQ.72obj8_jLZA9DdZPNow8hwZWxBA-arOzUOYBefNGS4Q
+
+### 9. Get all users (requires admin role)
+### Note: Replace token with actual admin access token
+GET http://localhost:3000/api/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+### 10. Block user (requires authentication)
+### Note: Replace the ID and token with actual values
+POST http://localhost:3000/api/users/550e8400-e29b-41d4-a716-446655440000/block
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+### 11. Grant admin role (requires admin role)
+### Note: Replace the ID and token with actual admin access token
+POST http://localhost:3000/api/users/550e8400-e29b-41d4-a716-446655440000/grant-admin
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+### ============================================
