@@ -24,7 +24,8 @@ export class AuthController {
 
       return res.status(200).json(response);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      console.log(error);
+      return res.status(400).json({ error: "Some internal error" });
     }
   }
 
@@ -41,7 +42,8 @@ export class AuthController {
 
       return res.status(200).json(response);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      console.log(error);
+      return res.status(400).json({ error: "Some internal error" });
     }
   }
 }

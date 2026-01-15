@@ -1,7 +1,7 @@
 import { prisma } from "../../database/prisma";
 import { UserStatus, userDefaultSelect } from "./user.constants";
 import { UserRegistrationData } from "../auth/auth.types";
-import { CustomSelect } from "./user.types";
+import { CustomSelect, UserUpdate } from "./user.types";
 
 export class UserService {
   async getUserById(userId: string, customSelect?: CustomSelect) {
@@ -33,6 +33,7 @@ export class UserService {
 
     return users;
   }
+
   async blockUser(userId: string, customSelect?: CustomSelect) {
     const user = await prisma.user.update({
       where: {
@@ -57,10 +58,29 @@ export class UserService {
         fullName: UserData.fullName,
         birthDate: UserData.birthDate,
         password: UserData.password,
+        refreshToken: UserData.refreshToken,
       },
       select: { ...userDefaultSelect, ...customSelect },
     });
 
     return user;
+  }
+
+  async updateUser(
+    userId: string,
+    newUserData: UserUpdate,
+    customSelect?: CustomSelect,
+  ) {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        ...newUserData,
+      },
+      select: { ...userDefaultSelect, ...customSelect },
+    });
+
+    return updatedUser;
   }
 }

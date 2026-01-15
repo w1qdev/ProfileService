@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { UserRoles } from "../../services/user/user.constants";
 
 export class JwtService {
   private readonly jwt = jwt;
@@ -11,21 +12,35 @@ export class JwtService {
 
   generateTokens(userId: string) {
     const accessToken = this.jwt.sign(
-      { userId },
-      {
-        secret: this.jwtAccessSecretToken,
-        expiresIn: this.jwtAccessTokenExpirationTime,
-      },
+      { userId, role: UserRoles.USER },
+      this.jwtAccessSecretToken,
+      { expiresIn: this.jwtAccessTokenExpirationTime },
     );
 
-    const refreshToken = this.jwt.sign(
-      { userId },
-      {
-        secret: this.jwtRefreshSecretToken,
-        expiresIn: this.jwtRefreshTokenExpirationTime,
-      },
-    );
+    const refreshToken = this.jwt.sign({ userId }, this.jwtRefreshSecretToken, {
+      expiresIn: this.jwtRefreshTokenExpirationTime,
+    });
 
     return { accessToken, refreshToken };
+  }
+
+  verifyAccessToken(token: string) {
+    try {
+      const result = this.jwt.verify(token, this.jwtAccessSecretToken);
+
+      return result;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  verifyRefreshToken(token: string) {
+    try {
+      const result = this.jwt.verify(token, this.jwtRefreshSecretToken);
+
+      return result;
+    } catch (error) {
+      return null;
+    }
   }
 }

@@ -3,6 +3,7 @@ export type UserRegistrationData = {
   email: string;
   password: string;
   birthDate: string;
+  refreshToken: string;
 };
 
 export type UserAuthenticationData = {
