@@ -219,7 +219,7 @@ model User {
   fullName     String
   email        String    @unique
   birthDate    String
-  password     String    (хеширован bcrypt)
+  password     String
   refreshToken String?
   role         UserRole  @default(USER)      # USER или ADMIN
   status       UserStatus @default(ACTIVE)   # ACTIVE или BLOCKED
